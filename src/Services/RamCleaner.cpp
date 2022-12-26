@@ -9,12 +9,14 @@ using namespace Endless::Services;
 #include "UnityEngine/Scripting/GarbageCollector.hpp"
 
 custom_types::Helpers::Coroutine RamCleaner::ClearRam() {
+    using namespace UnityEngine::Scripting;
+
     co_yield nullptr;
-    auto oldMode = UnityEngine::Scripting::GarbageCollector::GetMode();
+    auto oldMode = GarbageCollector::GetMode();
     for (int i = 1; i <= 8; ++i) {
-        co_yield reinterpret_cast<System::Collections::IEnumerator*>(UnityEngine::WaitForSeconds::New_ctor(0.2f));
-        UnityEngine::Scripting::GarbageCollector::SetMode(UnityEngine::Scripting::GarbageCollector::Mode::Enabled);
+        co_yield reinterpret_cast<::System::Collections::IEnumerator*>(UnityEngine::WaitForSeconds::New_ctor(0.2f));
+        GarbageCollector::SetMode(GarbageCollector::Mode::Enabled);
         System::GC::Collect();
     }
-    UnityEngine::Scripting::GarbageCollector::SetMode(oldMode);
+    GarbageCollector::SetMode(oldMode);
 }

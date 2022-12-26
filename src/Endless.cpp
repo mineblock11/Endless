@@ -21,4 +21,6 @@ extern "C" void load() {
     zenjector->Install<Endless::Installers::AppInstaller*>(Lapiz::Zenject::Location::App);
 
     INFO("Installed Zenjectors.")
+
+    srand(time(NULL))
 }
